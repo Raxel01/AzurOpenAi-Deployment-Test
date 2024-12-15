@@ -1,0 +1,15 @@
+services:
+  Litellm:
+    build: .
+    image: litellm:abait-ta
+    container_name: Litellm
+    volumes:
+    - .:/Litellm
+    command: >
+      bash -c "tail -f"
+    networks:
+      - networkService
+networks:
+  networkService:
+    driver: bridge
+    name: Inception-net
