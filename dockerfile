@@ -11,3 +11,5 @@ RUN pip install python-dotenv
 RUN pip install --upgrade pip
 
 RUN pip install litellm
+
+RUN pip install litellm[proxy]

@@ -1,0 +1,13 @@
+FROM python:3.9
+
+WORKDIR /root/AzureWebUI
+
+COPY . /root/AzureWebUI
+
+RUN pip install --upgrade pip
+
+RUN pip install litellm
+
+RUN pip install litellm[proxy]
+
+ENTRYPOINT ["litellm", "--config", "/root/AzureWebUI/config.yaml"]

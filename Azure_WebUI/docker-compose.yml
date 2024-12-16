@@ -1,0 +1,19 @@
+services:
+  AzureWebUI:
+    build: .
+    image: azure:abait-ta
+    container_name: azureWebUI
+    volumes:
+    - .:/azureWebUI
+    networks:
+      - networkService
+    ports:
+      - "4000:4000"
+    env_file: ../.env
+#  Add preumethose for monitoring
+#  Add database
+
+networks:
+  networkService:
+    external: true
+    name: Inception-net
