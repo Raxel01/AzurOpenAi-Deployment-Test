@@ -10,8 +10,26 @@ services:
     ports:
       - "4000:4000"
     env_file: ../.env
-#  Add preumethose for monitoring
-#  Add database
+    #  Add preumethose for monitoring
+  prometheus:
+    image: prom/prometheus:v2.37.0
+    container_name: prometheus
+    volumes:
+      - ./prometheuse.yaml:/etc/prometheus/prometheus.yml
+    networks:
+      - networkService
+    ports:
+      - "9090:9090"
+# Here we can Use promQL
+  grafana:
+    image: grafana/grafana:9.0.0
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    ports:
+      - "5000:3000"
+    networks:
+      - networkService
 
 networks:
   networkService:
