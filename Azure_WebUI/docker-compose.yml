@@ -1,26 +1,16 @@
 services:
-  Litellm:
-    build:
-      dockerfile: dockerfile.Litellm
-    image: litellm:abait-ta
-    container_name: Litellm
-    volumes:
-    - ./Litellm:/Litellm
+
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
     command: >
-      bash -c "tail -f"
+      "serve"
+    volumes:
+    - ollama:/root/.ollama
+    ports:
+      - "11434:11434"
     networks:
       - networkService
-
-  # Litellm:
-  #   build: .
-  #   image: litellm:abait-ta
-  #   container_name: Litellm
-  #   volumes:
-  #   - .:/Litellm
-  #   command: >
-  #     bash -c "tail -f"
-  #   networks:
-  #     - networkService
   
   AzureWebUI:
     build: .
@@ -60,17 +50,24 @@ services:
     image: ghcr.io/open-webui/open-webui:main
     container_name: open-webui
     restart: always
+    command: >
+      bash -c "bash start.sh"
     ports:
       - "3000:8080"
     volumes:
       - open-webui:/app/backend/data
     networks:
       - networkService
+    environment:
+      - OLLAMA_BASE_URLS=http://host.docker.internal:11434
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    # depends_on:
+    #   - AzureWebUI
 
 volumes:
   open-webui:
+  ollama:
 
 networks:
   networkService:

@@ -13,7 +13,9 @@ start:
 down:
 	docker compose -f ${COMPOSEFILE} down
 
-re  : prune up
+clear:
+	@clear
+re  : clear prune clear up
 
 clean:
 	@docker stop $$(docker ps -qa) || true
