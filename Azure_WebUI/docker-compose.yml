@@ -1,4 +1,27 @@
 services:
+  Litellm:
+    build:
+      dockerfile: dockerfile.Litellm
+    image: litellm:abait-ta
+    container_name: Litellm
+    volumes:
+    - ./Litellm:/Litellm
+    command: >
+      bash -c "tail -f"
+    networks:
+      - networkService
+
+  # Litellm:
+  #   build: .
+  #   image: litellm:abait-ta
+  #   container_name: Litellm
+  #   volumes:
+  #   - .:/Litellm
+  #   command: >
+  #     bash -c "tail -f"
+  #   networks:
+  #     - networkService
+  
   AzureWebUI:
     build: .
     image: azure:abait-ta
@@ -10,7 +33,8 @@ services:
     ports:
       - "4000:4000"
     env_file: ../.env
-    #  Add preumethose for monitoring
+    
+#  Add preumethose for monitoring
   prometheus:
     image: prom/prometheus:v2.37.0
     container_name: prometheus
@@ -20,6 +44,7 @@ services:
       - networkService
     ports:
       - "9090:9090"
+
 # Here we can Use promQL
   grafana:
     image: grafana/grafana:9.0.0
@@ -30,8 +55,24 @@ services:
       - "5000:3000"
     networks:
       - networkService
+  
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    restart: always
+    ports:
+      - "3000:8080"
+    volumes:
+      - open-webui:/app/backend/data
+    networks:
+      - networkService
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  open-webui:
 
 networks:
   networkService:
-    external: true
+    driver: bridge
     name: Inception-net

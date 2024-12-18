@@ -13,8 +13,14 @@ start:
 down:
 	docker compose -f ${COMPOSEFILE} down
 
-re  : stop rm up
+re  : prune up
 
-rm:
-	docker rm azureWebUI
-	docker rmi azure:abait-ta
+clean:
+	@docker stop $$(docker ps -qa) || true
+	@docker rm -f $$(docker ps -qa) || true
+	@docker rmi -f $$(docker images -qa) || true
+	@docker volume rm -f $$(docker volume ls -q) || true
+	@docker network rm $$(docker network ls -q) || true
+
+prune: clean
+	@docker system prune -a --volumes -f
