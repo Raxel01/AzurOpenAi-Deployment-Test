@@ -1,0 +1,15 @@
+FROM python:3.9
+
+WORKDIR /root/LitellmOpenAi
+
+COPY . /root/LitellmOpenAi
+
+RUN pip install --upgrade pip
+
+RUN pip install litellm
+
+RUN pip install litellm[proxy]
+
+RUN pip install prometheus_client==0.20.0
+
+ENTRYPOINT ["litellm", "--config", "/root/LitellmOpenAi/config.yaml"]
