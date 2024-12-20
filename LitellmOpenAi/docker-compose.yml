@@ -1,16 +1,5 @@
 services:
-  # ollama:
-  #   image: ollama/ollama
-  #   container_name: ollama
-  #   command: >
-  #     "serve"
-  #   volumes:
-  #   - ollama:/root/.ollama
-  #   ports:
-  #     - "11434:11434"
-  #   networks:
-  #     - networkService
-  
+
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
     container_name: open-webui
@@ -49,6 +38,8 @@ services:
       - networkService
     ports:
       - "9090:9090"
+    depends_on:
+      - LitellmOpenAi
 
 # Here we can Use promQL
   grafana:
@@ -60,6 +51,26 @@ services:
       - "5000:3000"
     networks:
       - networkService
+    depends_on:
+      - prometheus
+
+  nginx:
+    build:
+      context: ./nginx_setup
+      dockerfile: dockerfile.nginx
+    image: nginx:canis
+    container_name: nginx
+    ports:
+      - "443:443"
+    # volumes:
+      # - ./nginx_setup/conf.d:/etc/nginx/conf.d
+      # - ./ssl:/etc/nginx/ssl
+    networks:
+      - networkService
+    depends_on:
+      open-webui:
+        condition: service_healthy
+
 
 volumes:
   open-webui:

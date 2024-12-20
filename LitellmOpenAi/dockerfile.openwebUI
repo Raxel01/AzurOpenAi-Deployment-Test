@@ -1,4 +1,0 @@
-FROM ghcr.io/open-webui/open-webui:main
-
-
-ENTRYPOINT [ "bash", 'start.sh' ]
