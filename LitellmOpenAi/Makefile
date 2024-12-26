@@ -10,9 +10,7 @@ start:
 down:
 	docker compose down
 
-clear:
-	@clear
-re  : clear prune clear up
+re  : prune up
 
 clean:
 	@docker stop $$(docker ps -qa) || true

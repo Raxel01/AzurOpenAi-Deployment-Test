@@ -1,15 +1,19 @@
 services:
 
   open-webui:
-    image: ghcr.io/open-webui/open-webui:main
+    build:
+      context: ./openweb-ui
+      dockerfile : dockerfile.openwebui
+    image: open-webui:llm
     container_name: open-webui
     restart: always
     command: >
-      bash -c "bash start.sh"
+      bash -c "bash start.sh && python3 populate_db.py"
     ports:
       - "3000:8080"
     volumes:
       - open-webui:/app/backend/data
+      - ./openweb-ui/populate_db.py:/app/backend/populate_db.py
     networks:
       - networkService
     env_file: ../.env
@@ -17,11 +21,13 @@ services:
       - LitellmOpenAi
 
   LitellmOpenAi:
-    build: .
-    image: azure:abait-ta
+    build:
+      context: ./Litellm_setup
+      dockerfile: dockerfile.litellm
+    image: azure:llm
     container_name: LitellmOpenAi
     volumes:
-    - .:/LitellmOpenAi
+    - ./Litellm_setup:/LitellmOpenAi
     networks:
       - networkService
     ports:
@@ -33,7 +39,7 @@ services:
     image: prom/prometheus:v2.37.0
     container_name: prometheus
     volumes:
-      - ./prometheuse.yaml:/etc/prometheus/prometheus.yml
+      - ./prometheus_setup/prometheuse.yaml:/etc/prometheus/prometheus.yml
     networks:
       - networkService
     ports:
@@ -58,13 +64,10 @@ services:
     build:
       context: ./nginx_setup
       dockerfile: dockerfile.nginx
-    image: nginx:canis
+    image: nginx:llm
     container_name: nginx
     ports:
       - "443:443"
-    # volumes:
-      # - ./nginx_setup/conf.d:/etc/nginx/conf.d
-      # - ./ssl:/etc/nginx/ssl
     networks:
       - networkService
     depends_on:
