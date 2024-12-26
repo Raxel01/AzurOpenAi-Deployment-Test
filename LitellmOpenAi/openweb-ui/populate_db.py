@@ -3,11 +3,11 @@ import os
 import uuid
 
 from sqlalchemy.orm import sessionmaker
-from open_webui.apps.webui.internal.db import Base, get_db
-from open_webui.apps.webui.models.users import UserModel, Users
-from open_webui.apps.webui.models.models import Model
+from open_webui.internal.db import Base, get_db 
+from open_webui.models.users import UserModel, Users
+from open_webui.models.models import Model, ModelForm, Models
 from passlib.context import CryptContext
-from open_webui.apps.webui.models.auths import AuthModel, Auth
+from open_webui.models.auths import AuthModel, Auth
 from sqlalchemy import update
 from sqlalchemy.sql import null
 
@@ -19,7 +19,7 @@ role = os.getenv('ROLE')
 oauth_sub=None
 ADMIN_NAME = os.getenv('ADMIN_NAME')
 profile_image_url = os.getenv('DEFAULT_IMG')
-
+model_name = os.getenv('MODEL_NAME')
 try :
     with get_db() as db:
             id = str(uuid.uuid4())
@@ -33,9 +33,18 @@ try :
             user = Users.insert_new_user(
                 id, ADMIN_NAME, email, profile_image_url, role, oauth_sub
             )
-            
-            updateGPT = update(Model).where(Model.name == "gpt-4o").values(access_control=None)
-            db.execute(updateGPT)
+            # modelInstance = ModelForm(
+            #     id=model_name,
+            #     base_model_id=None,
+            #     name=model_name,
+            #     meta={"profile_image_url": "/static/favicon.png",
+            #            "description": "", "capabilities": {"vision": True, "citations": True},
+            #            "suggestion_prompts":None, "tags": []},
+            #     params={},
+            #     access_control=None,
+            #     is_active=1   
+            # )
+            # Gptmodel = Models.insert_new_model(modelInstance, id)
             db.commit()
             db.refresh(result)
 except Exception as e:
