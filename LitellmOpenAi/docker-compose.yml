@@ -95,10 +95,21 @@ services:
     env_file:
       - ../.env
     command:
-      - -nginx.scrape-uri=${NGINX_SCRAPE_URI}
+      - --nginx.scrape-uri=${NGINX_SCRAPE_URI}
     networks:
       - networkService
-    restart: always 
+    restart: always
+
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node-exporter
+    depends_on:
+      nginx:
+        condition: service_healthy
+    networks:
+      - networkService
+    restart: always
+
 
 
 volumes:
