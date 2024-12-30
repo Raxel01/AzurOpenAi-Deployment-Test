@@ -5,5 +5,13 @@ model_list:
       api_base: os.environ/AZURE_ENDPOINT
       api_key: os.environ/OPEN_AI_API_KEY
       api_version: os.environ/AZURE_API_VERSION
+
+  - model_name: os.environ/EMBEDDING_MODEL_NAME
+    litellm_params:
+      model: azure/EMBEDDINGS_DEPLOYMENT_NAME
+      api_base: os.environ/EMBEDDING_ENDPOINT
+      api_key: os.environ/EMBEDDINGS_API_KEY
+      api_version: os.environ/EMBEDDING_API_VERSION
+
 litellm_settings:
   callbacks: ["prometheus"]

@@ -20,10 +20,14 @@ oauth_sub=None
 ADMIN_NAME = os.getenv('ADMIN_NAME')
 profile_image_url = os.getenv('DEFAULT_IMG')
 model_name = os.getenv('MODEL_NAME')
+embedding_model_name = os.getenv('EMBEDDING_MODEL_NAME')
+
 try :
     with get_db() as db:
             query_user = db.query(Auth).filter(Auth.email==email).first()
             existing_model = db.query(Model).filter(Model.name == model_name).first()
+            embedding_existence = db.query(Model).filter(Model.name == embedding_model_name).first()
+            
             if query_user is None:
                 print('Admin User added')
                 id = str(uuid.uuid4())
@@ -46,7 +50,7 @@ try :
                            "suggestion_prompts":None, "tags": []},
                     params={},
                     access_control=None,
-                    is_active=1   
+                    is_active=1
                 )
                 Gptmodel = Models.insert_new_model(modelInstance, id)
                 db.commit()
