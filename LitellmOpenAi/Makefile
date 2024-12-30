@@ -1,5 +1,6 @@
 up: 
 	docker compose up --detach
+	bash health_populate.sh
 
 stop:
 	docker compose stop

@@ -20,6 +20,12 @@ services:
     env_file: ../.env
     depends_on:
       - LitellmOpenAi
+    healthcheck:
+      test: ["CMD", "curl", "-f", "0.0.0.0:8080/health"]
+      interval: 15s
+      timeout: 1m40s
+      retries: 10
+      start_period: 20s
 
   LitellmOpenAi:
     build:
@@ -47,6 +53,8 @@ services:
       - "9090:9090"
     depends_on:
       - LitellmOpenAi
+      - nginx-exporter
+      - node-exporter
 
 # Here we can Use promQL
   grafana:
@@ -61,6 +69,7 @@ services:
       - networkService
     depends_on:
       - prometheus
+    env_file: ../.env
     restart: unless-stopped
     volumes:
       - grafana-storage:/var/lib/grafana
@@ -93,10 +102,13 @@ services:
     depends_on:
       nginx:
         condition: service_healthy
+    ports:
+      - "9113:9113"
     env_file:
       - ../.env
     command:
-      - --nginx.scrape-uri=${NGINX_SCRAPE_URI}
+      - --nginx.scrape-uri=https://nginx:443/nginx_status
+      # -nginx.scrape-uri=http://nginx:80/nginx_status
     networks:
       - networkService
     restart: always
@@ -110,8 +122,6 @@ services:
     networks:
       - networkService
     restart: always
-
-
 
 volumes:
   open-webui:
