@@ -1,0 +1,71 @@
+# Data For the model Deployed in Azure OpenAI
+# Gpt-4o
+OPEN_AI_API_KEY=
+AZURE_ENDPOINT=
+AZURE_DEPLOYMENT_NAME=
+AZURE_API_VERSION=
+MODEL_NAME=
+# =========================================================
+
+ENDPOINTS=
+
+OPENAI_API_BASE=http://LitellmOpenAi:4000
+OPENAI_API_BASE_URLS=http://LitellmOpenAi:4000
+
+OPENAI_API_KEY=dummycode
+OPENAI_API_KEYS=dummycode
+
+# nginx server_name
+DOMAIN_NAME=0.0.0.0
+
+ENABLE_MODEL_FILTER=true
+MODEL_FILTER_LIST=
+
+WEBUI_SECRET_KEY=
+
+# Open Web UI admin data will be populated directly to data base
+OPEN_WEB_UI_ADMIN_PASSWORD=
+OPEN_WEB_UI_ADMIN_EMAIL=
+ROLE=admin
+OPEN_WEB_UI_ADMIN_NAME=
+DEFAULT_IMG=''
+# Open Web UI new signup type pending | user | admin : you can change it depends on your needs
+DEFAULT_USER_ROLE=user
+
+# Nginx exporter
+NGINX_SCRAPE_URI=https://nginx:443/nginx_status
+
+# Grafana admin details
+GF_SECURITY_ADMIN_PASSWORD=
+GF_SECURITY_ADMIN_USER=
+
+
+
+# your default models like gpt-4o,gpt-4o-mini...
+DEFAULT_MODELS=
+
+# OPENAI EMBEDDINGS Models
+EMBEDDINGS_MODEL_ENDPOINT=
+EMBEDDINGS_MODEL_APIKEY=
+EMBEDDINGS_MODEL_NAME=
+EMBEDDINGS_MODEL_DEPLOYMENT_NAME=
+EMBEDDINGS_MODEL_VERSION=
+
+
+GPT_MINI_ENDPOINT=
+GPT_MINI_APIKEY=
+GPT_MINI_NAME=
+GPT_MINI_DEPLOYMENT_NAME=
+GPT_MINI_API_VERSION=
+
+# Open Web UI Groupes
+FIRSTGROUPE=
+SECGROUPE=
+
+# PersistCongig
+ENABLE_CHANNELS=True
+RAG_EMBEDDING_ENGINE=
+RAG_EMBEDDING_MODEL=
+
+RAG_OPENAI_API_BASE_URL=http://LitellmOpenAi:4000
+RAG_OPENAI_API_KEY=

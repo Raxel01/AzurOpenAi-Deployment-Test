@@ -13,5 +13,12 @@ model_list:
       api_key: os.environ/GPT_MINI_APIKEY
       api_version: os.environ/GPT_MINI_API_VERSION
 
-# litellm_settings:
-#   callbacks: ["prometheus"]
+  - model_name: os.environ/EMBEDDINGS_MODEL_NAME
+    litellm_params:
+      model: azure/EMBEDDINGS_MODEL_DEPLOYMENT_NAME
+      api_base: os.environ/EMBEDDINGS_MODEL_ENDPOINT
+      api_key: os.environ/EMBEDDINGS_MODEL_APIKEY
+      api_version: os.environ/EMBEDDINGS_MODEL_VERSION
+
+litellm_settings:
+  callbacks: ["prometheus"]

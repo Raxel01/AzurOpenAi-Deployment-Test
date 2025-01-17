@@ -10,8 +10,8 @@ RUN pip install --upgrade pip
 
 # RUN pip install litellm[proxy]
 
-# RUN pip install prometheus_client==0.20.0
+RUN pip install prometheus_client==0.20.0
 
-RUN pip install --upgrade litellm litellm[proxy] prometheus_client
+RUN pip install --upgrade litellm litellm[proxy] 
 
 ENTRYPOINT ["litellm", "--config", "/root/LitellmOpenAi/config.yaml"]
