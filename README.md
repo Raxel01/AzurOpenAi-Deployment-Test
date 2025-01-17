@@ -1,4 +1,4 @@
-Open Source Template to Link Open WebUI with models deployed in Azure OpenAI
+Open Source Template to Link Open WebUI with models deployed in Azure OpenAI using Litellm Proxy
 
 This templates use solide infrastructure with technologies like : </br>
          <h2> docker/docker-compose </h2> </br>
