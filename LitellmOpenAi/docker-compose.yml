@@ -132,3 +132,6 @@ networks:
   networkService:
     driver: bridge
     name: Inception-net
+
+
+# OPEN WEBUI AZURE_OPEN_AI LiteLLM OWAL
